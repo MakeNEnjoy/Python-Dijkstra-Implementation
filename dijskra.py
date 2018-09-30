@@ -24,17 +24,20 @@ def find_in_queue(query):
 def dijkstra():
 	global queue
 	queue.sort(key=lambda x: x[1])
-	while not network[queue[0][0]][1] == 3:
-		
-		for i in network[queue[0][0]][2]:
-			index = find_in_queue(i[0])
-			if(index is not None):
-				if(queue[0][1]+i[1] < queue[index][1]):
-					queue[index][1] = queue[0][1]+i[1]
-					queue[index][2] = queue[0][0]
-		dequeue.append(queue[0])
-		del queue[0]
-		queue.sort(key=lambda x: x[1])
+	try:
+		while not network[queue[0][0]][1] == 3:
+			
+			for i in network[queue[0][0]][2]:
+				index = find_in_queue(i[0])
+				if(index is not None):
+					if(queue[0][1]+i[1] < queue[index][1]):
+						queue[index][1] = queue[0][1]+i[1]
+						queue[index][2] = queue[0][0]
+			dequeue.append(queue[0])
+			del queue[0]
+			queue.sort(key=lambda x: x[1])
+	except:
+		raise Exception("Maze not possible")
 	dequeue.append(queue[0])
 	del queue[0]
 generate_queue()
